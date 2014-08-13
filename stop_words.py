@@ -13,5 +13,5 @@ stops = [
     'both', 'each', 'few', 'more', 'most', 'other', 'some', 'such', 'no', 'nor',
     'not', 'only', 'own', 'same', 'so', 'than', 'too', 'very', 's', 't', 'can',
     'will', 'just', 'don', 'should', 'now', 'id', 'var', 'function', 'js', 'd',
-    'script', '\'script', 'fjs', 'document'
+    'script', '\'script', 'fjs', 'document', 'e'
 ]
