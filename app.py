@@ -45,6 +45,7 @@ def index():
 
             # text processing
             raw = BeautifulSoup(r.text).get_text()
+            nltk.data.path.append('./nltk_data/')
             tokens = nltk.word_tokenize(raw)
             text = nltk.Text(tokens)
 
