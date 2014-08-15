@@ -17,8 +17,6 @@ app = Flask(__name__)
 app.config.from_object(os.environ['APP_SETTINGS'])
 db = SQLAlchemy(app)
 
-from models import Result
-
 
 ################
 #### routes ####
@@ -45,7 +43,7 @@ def index():
 
             # text processing
             raw = BeautifulSoup(r.text).get_text()
-            nltk.data.path.append('./nltk_data/')
+            nltk.data.path.append('./nltk_data/')  # set the path
             tokens = nltk.word_tokenize(raw)
             text = nltk.Text(tokens)
 
@@ -65,6 +63,7 @@ def index():
                 reverse=True
             )[:10]
             try:
+                from models import Result
                 result = Result(
                     url=url,
                     result_all=raw_word_count,
