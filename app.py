@@ -22,7 +22,7 @@ db = SQLAlchemy(app)
 
 q = Queue(connection=conn)
 
-from models import Result
+from models import *
 
 
 ################
