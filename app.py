@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 from flask.ext.sqlalchemy import SQLAlchemy
+from flask import jsonify
 from stop_words import stops
 from collections import Counter
 from bs4 import BeautifulSoup
@@ -47,7 +48,7 @@ def count_and_save_words(url):
     tokens = nltk.word_tokenize(raw)
     text = nltk.Text(tokens)
 
-    # remove Puncuation, count raw words
+    # remove punctuation, count raw words
     nonPunct = re.compile('.*[A-Za-z].*')
     raw_words = [w for w in text if nonPunct.match(w)]
     raw_word_count = Counter(raw_words)
@@ -103,7 +104,6 @@ def get_results(job_key):
             key=operator.itemgetter(1),
             reverse=True
         )[:10]
-        from flask import jsonify
         return jsonify(results)
     else:
         return "Nay!", 202
