@@ -12,6 +12,7 @@ import os
 import requests
 import re
 import nltk
+import json
 
 #######################
 #### configuration ####
@@ -78,18 +79,23 @@ def count_and_save_words(url):
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    results = {}
-    if request.method == "POST":
-        # get url that the person has entered
-        url = request.form['url']
-        if 'http://' not in url[:7]:
-            url = 'http://' + url
-        job = q.enqueue_call(
-            func=count_and_save_words, args=(url,), result_ttl=5000
-        )
-        print job.get_id()
+    return render_template('index.html')
 
-    return render_template('index.html', results=results)
+
+@app.route('/start', methods=['POST'])
+def get_counts():
+    # get url
+    data = json.loads(request.data)
+    url = data["url"]
+    # form URL, id necessary
+    if 'http://' not in url[:7]:
+        url = 'http://' + url
+    # start job
+    job = q.enqueue_call(
+        func=count_and_save_words, args=(url,), result_ttl=5000
+    )
+    # return created job id
+    return job.get_id()
 
 
 @app.route("/results/<job_key>", methods=['GET'])
